@@ -1,4 +1,4 @@
-module top_hook(hole, hook_followup=2, hook_extra_radius=1) {
+module top_hook(hole, hook_followup=2, hook_extra_radius) {
     r = (hole/2) + hook_extra_radius;
     
     translate([0, 0, r]) {
@@ -23,20 +23,20 @@ module bottom_hook(hole, hook_followup=2) {
     }
 }
 
-module hook_pair(hole, pitch) {
+module hook_pair(hole, pitch, hook_extra_radius) {
     translate([0, 0, pitch/2])
-        top_hook(hole=hole);
+        top_hook(hole=hole, hook_extra_radius=hook_extra_radius);
     translate([0, 0, -pitch/2])
         bottom_hook(hole=hole);
 }
 
-module hook_array(hole, h_pitch, v_pitch, object_width) {
+module hook_array(hole, h_pitch, v_pitch, object_width, hook_extra_radius=1) {
     holes = [0 : h_pitch : object_width-hole];
     effective_width=floor((object_width-hole)/h_pitch) * h_pitch;
     
     translate([-effective_width/2, 0, 0])
     for (i = holes) {
         translate([i, 0, 0])
-            hook_pair(hole, pitch=v_pitch);
+            hook_pair(hole, pitch=v_pitch, hook_extra_radius=hook_extra_radius);
     }
 }
