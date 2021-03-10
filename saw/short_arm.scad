@@ -1,5 +1,5 @@
-include <BOSL2/std.scad>
-include <BOSL2/shapes.scad>
+include <../BOSL2/std.scad>
+include <../BOSL2/shapes.scad>
 
 module short_arm_keyhole(d, thickness, keyhole_width, keyhole_depth) {
     difference() {
