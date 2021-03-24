@@ -44,18 +44,21 @@ module hook_array(hole, h_pitch, v_pitch, object_width, hook_extra_radius=1) {
     }
 }
 
-module cylinder_holder(num_of_pliers, hole_size, hole_pitch, height=40, chamfer_depth=2) {
-    width = hole_pitch*(num_of_pliers);
+module cylinder_holder(num_of_holes, hole_size, hole_pitch, height=40, chamfer_depth=2, bottom_support=0) {
+    width = hole_pitch*(num_of_holes);
     depth = 2*hole_size;
 
-    down(height/2-10) difference(){
-        cube([width, depth, height], center=true);
+    down((height+bottom_support)/2-10) difference(){
+        cuboid([width, depth, height+bottom_support], chamfer=0.5);
 
-        last_hole_x = (num_of_pliers-1)*hole_pitch;
+        last_hole_x = (num_of_holes-1)*hole_pitch;
         right(-last_hole_x/2)
         for (i = [0 : hole_pitch : last_hole_x])
-            right(i)
-                cyl(h=height+0.01, d=hole_size, chamfer=-chamfer_depth, $fn=60);
+            right(i) up(bottom_support/2)
+                if(bottom_support == 0)
+                    cyl(h=height+0.01, d=hole_size, chamfer=-chamfer_depth, $fn=60);
+                else
+                    cyl(h=height+0.01, d=hole_size, chamfer2=-chamfer_depth, $fn=60);
     }
 
     back(depth/2) hook_array(hole=4.8, h_pitch=45, v_pitch=15, object_width=width);
