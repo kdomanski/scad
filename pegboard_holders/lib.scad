@@ -44,7 +44,7 @@ module hook_array(hole, h_pitch, v_pitch, object_width, hook_extra_radius=1) {
     }
 }
 
-module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0, labels=false) {
+module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0, labels=false, clearance=0) {
     function width(i, n=0) = i==len(holes) ? n : width(i+1, n=n+holes[i]+6);
 
     w = width(0)+2;
@@ -58,9 +58,9 @@ module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0, labe
             delta = width(i=i);
             right((holes[i]/2)+3-delta) up(bottom_support/2) {
                 if(bottom_support == 0)
-                    cyl(h=height+0.01, d=holes[i], chamfer=-chamfer_depth, $fn=60);
+                    cyl(h=height+0.01, d=holes[i]+clearance, chamfer=-chamfer_depth, $fn=60);
                 else
-                    cyl(h=height+0.01, d=holes[i], chamfer2=-chamfer_depth, $fn=60);
+                    cyl(h=height+0.01, d=holes[i]+clearance, chamfer2=-chamfer_depth, $fn=60);
 
                 if(labels) {
                     back(2-depth/2)
