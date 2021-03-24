@@ -1,3 +1,6 @@
+include <../BOSL2/std.scad>
+include <../BOSL2/shapes.scad>
+
 module top_hook(hole, hook_followup=2, hook_extra_radius) {
     r = (hole/2) + hook_extra_radius;
     
@@ -39,4 +42,21 @@ module hook_array(hole, h_pitch, v_pitch, object_width, hook_extra_radius=1) {
         translate([i, 0, 0])
             hook_pair(hole, pitch=v_pitch, hook_extra_radius=hook_extra_radius);
     }
+}
+
+module cylinder_holder(num_of_pliers, hole_size, hole_pitch, height=40, chamfer_depth=2) {
+    width = hole_pitch*(num_of_pliers);
+    depth = 2*hole_size;
+
+    down(height/2-10) difference(){
+        cube([width, depth, height], center=true);
+
+        last_hole_x = (num_of_pliers-1)*hole_pitch;
+        right(-last_hole_x/2)
+        for (i = [0 : hole_pitch : last_hole_x])
+            right(i)
+                cyl(h=height+0.01, d=hole_size, chamfer=-chamfer_depth, $fn=60);
+    }
+
+    back(depth/2) hook_array(hole=4.8, h_pitch=45, v_pitch=15, object_width=width);
 }
