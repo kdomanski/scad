@@ -44,22 +44,25 @@ module hook_array(hole, h_pitch, v_pitch, object_width, hook_extra_radius=1) {
     }
 }
 
-module cylinder_holder(num_of_holes, hole_size, hole_pitch, height=40, chamfer_depth=2, bottom_support=0) {
-    width = hole_pitch*(num_of_holes);
-    depth = 2*hole_size;
+module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0) {
+    function width(i, n=0) = i==len(holes) ? n : width(i+1, n=n+holes[i]+6);
+
+    w = width(0)+2;
+    depth = 2*max(holes);
 
     down((height+bottom_support)/2-10) difference(){
-        cuboid([width, depth, height+bottom_support], chamfer=0.5);
+        cuboid([w, depth, height+bottom_support], chamfer=0.5);
 
-        last_hole_x = (num_of_holes-1)*hole_pitch;
-        right(-last_hole_x/2)
-        for (i = [0 : hole_pitch : last_hole_x])
-            right(i) up(bottom_support/2)
+        right(width(0)/2)
+        for (i = [0:len(holes)-1]) {
+            delta = width(i=i);
+            right((holes[i]/2)+3-delta) up(bottom_support/2)
                 if(bottom_support == 0)
-                    cyl(h=height+0.01, d=hole_size, chamfer=-chamfer_depth, $fn=60);
+                    cyl(h=height+0.01, d=holes[i], chamfer=-chamfer_depth, $fn=60);
                 else
-                    cyl(h=height+0.01, d=hole_size, chamfer2=-chamfer_depth, $fn=60);
+                    cyl(h=height+0.01, d=holes[i], chamfer2=-chamfer_depth, $fn=60);
+        }
     }
 
-    back(depth/2) hook_array(hole=4.8, h_pitch=45, v_pitch=15, object_width=width);
+    back(depth/2) hook_array(hole=4.8, h_pitch=45, v_pitch=15, object_width=w);
 }
