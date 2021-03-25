@@ -9,6 +9,8 @@ hook_height=5;
 support_height = height - 3;
 support_width = width - 4;
 
+support = true;
+
 module hook_section(h=height, w=width) {
     left((w-h)/2)  circle(d=h, $fn=120);
     right((w-h)/2) circle(d=h, $fn=120);
@@ -19,11 +21,13 @@ xrot(90) linear_extrude(height=depth) hook_section();
 up(height/2) fwd((depth) + (height/2)) linear_extrude(height=hook_height) hook_section();
 translate([0, -depth, height/2]) zrot(180) yrot(90) rotate_extrude(angle=90, $fn=120) right(height/2) zrot(90) hook_section();
 
-support_angle=atan((depth+height-0.5)/(10-(support_height/2)));
-support_len=sqrt(pow(10, 2)+pow(depth+(height/2), 2));
-difference() {
-    back((height/2)-0.5) down(10-support_height) xrot(support_angle) linear_extrude(height=support_len) fwd(support_height/2) hook_section(h=support_height, w=support_width);
-    left(width/2) down(50) cube([width, depth, 100]);
+if (support) {
+    support_angle=atan((depth+height-0.5)/(10-(support_height/2)));
+    support_len=sqrt(pow(10, 2)+pow(depth+(height/2), 2));
+    difference() {
+        back((height/2)-0.5) down(10-support_height) xrot(support_angle) linear_extrude(height=support_len) fwd(support_height/2) hook_section(h=support_height, w=support_width);
+        left(width/2) down(50) cube([width, depth, 100]);
+    }
 }
 
 back(1) cuboid([width, 2, 20], chamfer=0.2);
