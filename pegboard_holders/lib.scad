@@ -44,8 +44,8 @@ module hook_array(hole, h_pitch, v_pitch, object_width, hook_extra_radius=1) {
     }
 }
 
-module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0, labels=false, labels_override=[], txt_size=6, clearance=0) {
-    function width(i, n=0) = i==len(holes) ? n : width(i+1, n=n+holes[i]+6);
+module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0, labels=false, labels_override=[], txt_size=6, clearance_around_drill=0, clearance_around_holes=3) {
+    function width(i, n=0) = i==len(holes) ? n : width(i+1, n=n+holes[i]+(2*clearance_around_holes));
 
     w = width(0)+2;
     depth = 2*max(holes);
@@ -56,11 +56,11 @@ module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0, labe
         right(width(0)/2)
         for (i = [0:len(holes)-1]) {
             delta = width(i=i);
-            right((holes[i]/2)+3-delta) up(bottom_support/2) {
+            right((holes[i]/2)+clearance_around_holes-delta) up(bottom_support/2) {
                 if(bottom_support == 0)
-                    cyl(h=height+0.01, d=holes[i]+clearance, chamfer=-chamfer_depth, $fn=60);
+                    cyl(h=height+0.01, d=holes[i]+clearance_around_drill, chamfer=-chamfer_depth, $fn=60);
                 else
-                    cyl(h=height+0.01, d=holes[i]+clearance, chamfer2=-chamfer_depth, $fn=60);
+                    cyl(h=height+0.01, d=holes[i]+clearance_around_drill, chamfer2=-chamfer_depth, $fn=60);
 
                 if(labels) {
                     back(2-depth/2)
