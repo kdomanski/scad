@@ -6,6 +6,7 @@ height = 6;
 width = 10;
 depth = 10;
 hook_height=5;
+body_chamfer = 0.2;
 support_height = height - 3;
 support_width = width - 4;
 hook_angle = 60;
@@ -30,6 +31,6 @@ if (support) {
     }
 }
 
-back(1) cuboid([width, 2, 20], chamfer=0.2);
+back(1) cuboid([width+(2*body_chamfer), 2, 20], chamfer=body_chamfer);
 
 back(2) hook_array(hole=4.6, h_pitch=45, v_pitch=15, object_width=width, hook_extra_radius=1.5);
