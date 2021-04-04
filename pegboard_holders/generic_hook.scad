@@ -8,7 +8,7 @@ depth = 10;
 hook_height=5;
 support_height = height - 3;
 support_width = width - 4;
-
+hook_angle = 60;
 support = true;
 
 module hook_section(h=height, w=width) {
@@ -18,8 +18,8 @@ module hook_section(h=height, w=width) {
 }
 
 xrot(90) linear_extrude(height=depth) hook_section();
-up(height/2) fwd((depth) + (height/2)) linear_extrude(height=hook_height) hook_section();
-translate([0, -depth, height/2]) zrot(180) yrot(90) rotate_extrude(angle=90, $fn=120) right(height/2) zrot(90) hook_section();
+up(height/2) fwd(depth) xrot(90-hook_angle) fwd(height/2) linear_extrude(height=hook_height) hook_section();
+translate([0, -depth, height/2]) zrot(180) yrot(90) rotate_extrude(angle=hook_angle, $fn=120) right(height/2) zrot(90) hook_section();
 
 if (support) {
     support_angle=atan((depth+height-0.5)/(10-(support_height/2)));
