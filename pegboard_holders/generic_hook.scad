@@ -31,6 +31,14 @@ if (support) {
     }
 }
 
-back(1) cuboid([width+(2*body_chamfer), 2, 20], chamfer=body_chamfer);
+back(1) difference() {
+    cuboid([width+(2*body_chamfer), 2, 20], chamfer=body_chamfer);
+    back(0) left(1.3) yrot(90) {
+        xrot(-90) linear_extrude(height=1.01) text(text=str("DEPTH=", depth), size=1.5, halign="center");
+        up(1.8) xrot(-90) linear_extrude(height=1.01) text(text=str("WIDTH=", width), size=1.5, halign="center");
+        up(3.6) xrot(-90) linear_extrude(height=1.01) text(text=str("ANGLE=", hook_angle), size=1.5, halign="center");
+    }
+}
 
-back(2) hook_array(hole=4.6, h_pitch=45, v_pitch=15, object_width=width, hook_extra_radius=1.5);
+back(2) hook_array(hole=4.4, h_pitch=45, v_pitch=15, object_width=width, hook_extra_radius=1.5);
+
