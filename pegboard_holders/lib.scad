@@ -44,7 +44,7 @@ module hook_array(hole, h_pitch, v_pitch, object_width, hook_extra_radius=1) {
     }
 }
 
-module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0, labels=false, labels_override=[], txt_size=6, clearance_around_drill=0, clearance_around_holes=3) {
+module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0, labels=false, labels_override=[], txt_size=6, clearance_around_drill=0, clearance_around_holes=3, hooks=true) {
     function width(i, n=0) = i==len(holes) ? n : width(i+1, n=n+holes[i]+(2*clearance_around_holes));
 
     w = width(0)+2;
@@ -74,6 +74,7 @@ module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0, labe
         }
     }
 
-    back(depth/2) hook_array(hole=4.8, h_pitch=45, v_pitch=15, object_width=w);
+    if (hooks)
+        back(depth/2) hook_array(hole=4.8, h_pitch=45, v_pitch=15, object_width=w);
 }
 
