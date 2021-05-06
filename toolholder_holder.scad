@@ -9,7 +9,7 @@ holder_angle = 10;
 
 module core() {
     backplate_relief = 15;
-    grip_height = 20;
+    grip_height = 30;
     ddown = backplate_relief*sin(holder_angle);
     down(ddown) difference() {
         back((w1+2.5)*sin(10)) xrot(90-holder_angle) zrot(-90) union() {
