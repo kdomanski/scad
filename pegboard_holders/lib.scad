@@ -48,7 +48,7 @@ module cylinder_holder(holes, height=40, chamfer_depth=2, bottom_support=0, labe
     function width(i, n=0) = i==len(holes) ? n : width(i+1, n=n+holes[i]+(2*clearance_around_holes));
 
     w = width(0)+2;
-    depth = 2*max(holes);
+    depth = max(holes)+(clearance_around_holes+chamfer_depth)*2;
 
     down((height+bottom_support)/2-10) difference(){
         cuboid([w, depth, height+bottom_support], chamfer=0.5);
