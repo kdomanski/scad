@@ -6,23 +6,23 @@ module top_hook(hole, hook_followup=2, hook_extra_radius) {
     
     translate([0, 0, r]) {
         rotate([0, 90, 0])
-            rotate_extrude(angle=90, $fn=60)
+            rotate_extrude(angle=90, $fn=120)
                 translate([r, 0, 0])
-                    circle(d=hole, $fn=60);
+                    circle(d=hole, $fn=120);
     
         translate([0, r, 0]) {
-            cylinder(hook_followup/2, d=hole, $fn=60);
             translate([0, 0, hook_followup/2])
-                cylinder(hook_followup/2, d1=hole, d2=hole*0.75, $fn=60);
+            cylinder(hook_followup/2, d=hole, $fn=120);
+                cylinder(hook_followup/2, d1=hole, d2=hole*0.75, $fn=120);
         }
     }
 }
 
 module bottom_hook(hole, hook_followup=2) {
     rotate([-90, 0, 0]) {
-        cylinder(hook_followup, d=hole, $fn=60);
+        cylinder(hook_followup, d=hole, $fn=120);
         translate([0, 0, hook_followup])
-            cylinder(hook_followup, d1=hole, d2=hole*0.8, $fn=60);
+            cylinder(hook_followup, d1=hole, d2=hole*0.8, $fn=120);
     }
 }
 
