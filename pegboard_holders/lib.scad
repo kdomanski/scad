@@ -10,10 +10,10 @@ module top_hook(hole, hook_followup=2, hook_extra_radius) {
                 translate([r, 0, 0])
                     circle(d=hole, $fn=120);
     
-        translate([0, r, 0]) {
-            translate([0, 0, hook_followup/2])
+        translate([0, r, -0.01]) {
             cylinder(hook_followup/2, d=hole, $fn=120);
-                cylinder(hook_followup/2, d1=hole, d2=hole*0.75, $fn=120);
+            translate([0, 0, (hook_followup/2)-0.01])
+                cylinder((hook_followup/2)+0.01, d1=hole, d2=hole*0.75, $fn=120);
         }
     }
 }
