@@ -3,7 +3,11 @@ include <BOSL2/shapes.scad>
 
 difference() {
     union() {
-        cuboid([6, 35, 25], rounding=1, $fn=120, anchor=TOP+LEFT);
+        left(extra_len) {
+            cuboid([6+extra_len, 35, 8], rounding=1, $fn=120, anchor=TOP+LEFT);
+            cuboid([6, 35, 25], rounding=1, $fn=120, anchor=TOP+LEFT);
+            down(17) cuboid([8, 35, 8], rounding=1, $fn=120, anchor=TOP+LEFT);
+        }
 
         right(3) fwd(6.25)  cuboid([55, 8.5, 8], rounding=0.4, $fn=120, anchor=TOP+LEFT+BACK);
         right(3) back(6.25) cuboid([55, 8.5, 8], rounding=0.4, $fn=120, anchor=TOP+LEFT+FRONT);
