@@ -1,6 +1,8 @@
 include <BOSL2/std.scad>
 include <BOSL2/shapes.scad>
 
+extra_len = 6;
+
 difference() {
     union() {
         left(extra_len) {
