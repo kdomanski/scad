@@ -7,6 +7,8 @@ w2=w1-(2*cos(60)*h);
 
 holder_angle = 10;
 
+double = true;
+
 module core() {
     backplate_relief = 15;
     grip_height = 30;
@@ -35,5 +37,12 @@ module backplate() {
     }
 }
 
+// single
 core();
 backplate();
+
+// double
+if (double) {
+    right(10) mirror([1, 0, 0]) core();
+    right(12) backplate();
+}
