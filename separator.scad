@@ -6,3 +6,7 @@ include <BOSL2/shapes.scad>
 back(50) cuboid([51, 30, 2.1], rounding=3, edges="Z", $fn=120);
 
 linear_extrude(2.1) trapezoid(w1=109, w2=107, h=50, rounding=3, $fn=120);
+
+// For the typical small components box from Aliexpress
+
+back(80) cuboid([28, 20, 1.2], rounding=3, edges="Z", $fn=120);
